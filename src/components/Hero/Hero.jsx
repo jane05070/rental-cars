@@ -12,9 +12,9 @@ const HeroSection = () => {
         <Hero>
             <Container>
                 <ContentWrapper>
-                    <HeroTextMain>"Travel Beyond Boundaries with Our Wheels."</HeroTextMain>
+                    <HeroTextMain>Your journey begins here - freedom on wheels with our cars.</HeroTextMain>
                     <HeroTextSecondary>
-                        Welcome to Car Rental Service! Our app is your gateway to unlocking the road to adventure with hassle-free car rentals. Whether you're planning a weekend getaway or a long road trip, we've got you covered.
+                        Welcome to Car Rental Service, where every journey begins with ease. Explore the world, your way, with our user-friendly app. From spontaneous getaways to epic road trips, we've got all your travel needs covered.
                     </HeroTextSecondary>
                 </ContentWrapper>
             </Container>
