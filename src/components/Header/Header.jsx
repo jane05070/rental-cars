@@ -4,13 +4,13 @@ import Container from 'components/Container/Container'
 
 
 const Header = () => {
-    return (
-        <AppBar>
-            <Container>
-                <Navigation />
-            </Container>
-        </AppBar>
-    )
+  return (
+    <AppBar>
+      <Container>
+        <Navigation/>
+      </Container>
+    </AppBar>
+  )
 }
 
 export default Header

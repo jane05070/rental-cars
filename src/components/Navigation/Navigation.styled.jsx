@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import styled from '@emotion/styled';
-import { FaCarAltl } from 'react-icons/bs';
-
+import { BsFillCarFrontFill } from 'react-icons/bs';
+import { FaArrowLeft } from 'react-icons/fa';
 
 export const Nav = styled.nav`
   display: flex;
@@ -116,7 +116,7 @@ export const Link = styled(NavLink)`
   }
 `;
 
-export const HomeIcon = styled(FaCarAltl)`
+export const HomeIcon = styled(BsFillCarFrontFill)`
   width: 20px;
   height: 20px;
   margin: 0;
@@ -132,7 +132,29 @@ export const HomeIcon = styled(FaCarAltl)`
   box-shadow: rgb(188 221 244) 0px 0px 15px;
 `;
 
+export const GoBackIcon = styled(FaArrowLeft)`
+  width: 20px;
+  height: 20px;
+  margin-left: 10px;
 
+  padding: 10px;
+
+  color: #7b9ed9;
+  border-radius: 50%;
+  border: 3px solid #7b9ed9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: rgb(188 221 244) 0px 0px 15px;
+
+  @media (min-width: 768px) {
+    margin: 0;
+  }
+  @media (min-width: 1440px) {
+    margin: 0;
+  }
+`;
 
 export const LogoWrapper = styled.div`
   width: 110px;
