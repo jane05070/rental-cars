@@ -1,14 +1,22 @@
 import React from 'react';
-import { FilterSection } from 'components/FilterSection/FilterSection';
-import BtnToTop from 'components/Buttons/BtnToTop';
-import Container from 'components/Container/Container';
+import { FilterSection } from '../components/FilterSection/FilterSection';
 
-const Catalogue = ({ data }) => {
+import Container from '../components/Container/Container';
+
+import CarList from "../components/ListCards/ListCards"
+
+
+const Catalogue = () => {
+  
+   
+
   return (
     <>
-      <BtnToTop />
+      
       <Container>
-      <FilterSection data={data} />
+        {/* <FilterSection/> */}
+        <CarList/>
+         
       </Container>
 
     </>

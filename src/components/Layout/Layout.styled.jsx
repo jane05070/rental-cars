@@ -8,6 +8,7 @@ export const MainContainer = styled.main`
   height: 100%;
   max-width: 1440px;
   min-width: 320px;
+  margin: 0
 
   justify-content: space-between;
   flex-direction: column;

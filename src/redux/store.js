@@ -1,7 +1,4 @@
-import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import { favoriteSlice } from './favoriteSlice/slice';
-import { carsApi } from './usersSlice/slice';
-import { setupListeners } from '@reduxjs/toolkit/query';
+import { configureStore } from "@reduxjs/toolkit";
 import {
   persistStore,
   persistReducer,
@@ -11,30 +8,27 @@ import {
   PERSIST,
   PURGE,
   REGISTER,
-} from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
+} from "redux-persist";
+import storage from "redux-persist/lib/storage";
+
+import { reducer } from "./reducer";
 
 const persistConfig = {
-  key: 'root',
+  key: "favorites",
   storage,
-  whitelist: ['favorite'],
 };
 
-const rootReducer = combineReducers({
-    [carsApi.reducerPath]: carsApi.reducer,
-    favorite: favoriteSlice.reducer,
-});
-
-const persistUsersReducer = persistReducer(persistConfig, rootReducer);
+const persistedCarsReducer = persistReducer(persistConfig, reducer);
 
 export const store = configureStore({
-  reducer: persistUsersReducer,
-  middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware({
+  reducer: persistedCarsReducer,
+  middleware(getDefaultMiddleware) {
+    return getDefaultMiddleware({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }).concat(carsApi.middleware),
+    });
+  },
 });
+
 export const persistor = persistStore(store);
-setupListeners(store.dispatch);

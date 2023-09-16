@@ -44,7 +44,7 @@ export const Rect = styled.div`
     #486fbc
   );
   background-position: 0% 50%;
-  background-size: 1000% 1000%;
+  background-size: 100% 100%;
   overflow: hidden;
   animation: moveGradient 15s infinite;
   ${({ clipPath }) => `clip-path: ${clipPath};`}

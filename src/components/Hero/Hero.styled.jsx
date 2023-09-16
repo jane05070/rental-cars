@@ -15,7 +15,7 @@ display: flex;
   background-attachment: fixed;
   background-size: cover;
   background-position: center;
-  width: 100%;
+   width: 100%;
   height: 100vh;
 `;
 
@@ -28,10 +28,12 @@ export const ContentWrapper = styled.div`
   width: 320px;
   height: 100%;
   margin-left: auto;
+  margin-right: 30px;
 
   @media (min-width: 768px) {
     gap: 20px;
     width: 450px;
+    margin-right: 40px;
   }
   @media (min-width: 1440px) {
     gap: 30px;

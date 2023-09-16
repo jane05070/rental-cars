@@ -1,15 +1,18 @@
 import Navigation from 'components/Navigation/Navigation'
 import { AppBar } from './Header.styled'
-import Container from 'components/Container/Container'
+import Container from "../Container/Container"
+
 
 
 const Header = () => {
   return (
+    <Container>
     <AppBar>
-      <Container>
+     
         <Navigation/>
-      </Container>
-    </AppBar>
+      
+      </AppBar>
+    </Container>
   )
 }
 

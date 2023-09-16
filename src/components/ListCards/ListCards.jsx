@@ -1,40 +1,37 @@
-import React from 'react';
-import { SectionContainer } from './ListCards.styled';
+import { useEffect, useState } from "react";
+import { List } from "./ListCards.styled";
+import { getCatalog } from "../../service/car-service";
+import Card from "../Card/Card";
 
-import Card from '../Card/Card';
-import { List, ListItem } from './ListCards.styled';
+import { useSelector } from "react-redux";
+import { selectFavorites } from "../../redux/favoriteSlice/selectors";
 
-const CarList = ({ cars }) => {
+const CarList = ({ renderFavorites }) => {
+  const [cars, setCars] = useState([]);
+  const favorites = useSelector(selectFavorites);
+
+  useEffect(() => {
+    async function fetch() {
+      try {
+        const result = await getCatalog();
+        setCars(result);
+      } catch (error) {
+        console.error("Error fetching catalog:", error);
+      }
+    }
+
+    fetch();
+  }, []);
+
+  const favoriteCars = cars.filter((car) => favorites.includes(car.id));
+
   return (
-    <>
-      <SectionContainer>
-        <List>
-          {cars.map(car => (
-            <ListItem key={car.id}>
-              <Card
-                model={car.model}
-                make={car.make}
-                year={car.year}
-                rentalPrice={car.rentalPrice}
-                isFavorite={car.isFavorite}
-                address={car.address}
-                rentalCompany={car.rentalCompany}
-                functionalities={car.functionalities}
-                id={car.id}
-                type={car.type}
-                img={car?.img}
-                fuelConsumption={car.fuelConsumption}
-                engineSize={car.engineSize}
-                description={car.description}
-                accessories={car.accessories}
-                rentalConditions={car.rentalConditions}
-                mileage={car.mileage}
-              />
-            </ListItem>
-          ))}
-        </List>
-      </SectionContainer>
-    </>
+    <List>
+      {cars &&
+        (renderFavorites
+          ? favoriteCars.map((car) => <Card key={car.id} car={car} />)
+          : cars.map((car) => <Card key={car.id} car={car} />))}
+    </List>
   );
 };
 
