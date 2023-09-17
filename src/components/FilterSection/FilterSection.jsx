@@ -1,103 +1,168 @@
-import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
+import PropTypes from 'prop-types';
 import Select from 'react-select';
+// Components
+import { ButtonFilter} from '../Buttons/Buttons';
+// Styled components
 import {
-  FilterForm,
-  FormLabel,
-  MileageInput,
-  SubmitButton,
+  StyledForm,
+  Label,
+  InputHeading,
+  selectStyles,
+  Fieldset,
+  Legend,
+  InputWrapper,
+  InputLabel,
+  LabelText,
+  NumberInput,
+  ButtonsWrapper,
 } from './FilterSection.styled';
+// Helpers
+import { selectData } from '../../helpers/selectData';
+
+import { formSettings } from './formSettings';
+import { initialValues } from './initialValues';
+
 import makes from '../../Data/makes';
-import {
-  setSelectedBrand,
-  setSelectedPrice,
-  setFromMileage,
-  setToMileage
-} from '../../redux/slice';
-import { getCatalog } from '../../service/car-service';
+const priceList = Array.from({ length: 48 }, (_, index) => {
+  const value = (index + 3) * 10;
+  return { value, label: value };
+});
+const brandsList = selectData(makes);
 
-const brands = makes.map(make => ({ value: make, label: make }));
-const pricesPerHour = [
-  { value: 10, label: 10 },
-  { value: 20, label: 20 },
-  { value: 30, label: 30 },
-  { value: 40, label: 40 },
-  { value: 50, label: 50 },
-  { value: 60, label: 60 },
-  { value: 70, label: 70 },
-  { value: 80, label: 80 },
-  { value: 90, label: 90 },
-  { value: 100, label: 100 },
-];
-
-const FilterSection = () => {
-
-  const selectedBrand = useSelector(state => state.cars.filters.selectedBrand);
-  const selectedPrice = useSelector(state => state.cars.filters.selectedPrice);
-  const fromMileage = useSelector(state => state.cars.filters.fromMileage);
-  const toMileage = useSelector(state => state.cars.filters.toMileage);
-  const dispatch = useDispatch();
-
-  const handleBrandChange = selectedOption => {
-    dispatch(setSelectedBrand(selectedOption));
-  };
-
-  const handlePriceChange = selectedOption => {
-    dispatch(setSelectedPrice(selectedOption));
-  };
-
-  const handleFromMileageChange = event => {
-    dispatch(setFromMileage(event.target.value));
-  };
-
-  const handleToMileageChange = event => {
-    dispatch(setToMileage(event.target.value));
-  };
-
-  const handleSubmit = event => {
-    event.preventDefault();
-
-    dispatch(getCatalog({
-      selectedBrand,
-      selectedPrice,
-      fromMileage,
-      toMileage,
-    }));
+export const FilterSection = ({ handleSearch }) => {
+  const {
+    register,
+    handleSubmit,
+    control,
+    clearErrors,
+    setError,
+    getValues,
+    reset,
     
+  } = useForm(formSettings);
+
+  const [searchState, setState] = useState({ ...initialValues });
+
+  const handleSelectChange = fieldName => {
+    const data = getValues(fieldName);
+
+    setState(prevState => ({
+      ...prevState,
+      [fieldName]: data,
+    }));
+  };
+
+  const handleInputChange = evt => {
+    const fieldName = evt.target.name;
+    const value = evt.target.value;
+
+    value ? clearErrors(fieldName) : setError(fieldName);
+
+    setState(prevState => ({
+      ...prevState,
+      [fieldName]: value,
+    }));
+  };
+
+  const handleFormReset = async () => {
+    reset();
+    setState(initialValues);
   };
 
   return (
-    <FilterForm onSubmit={handleSubmit}>
-      <div className="filter-brand">
-        <FormLabel>Car brand</FormLabel>
-        <Select
-          classNamePrefix="filter-select"
-          options={brands}
-          value={selectedBrand}
-          onChange={handleBrandChange}
-          placeholder="Enter the text"
-        />
-      </div>
-      <div className="filter-price">
-        <FormLabel>Price / 1 hour</FormLabel>
-        <Select
-          classNamePrefix="filter-select"
-          options={pricesPerHour}
-          value={selectedPrice}
-          onChange={handlePriceChange}
-          placeholder="Enter the text"
-        />
-      </div>
-      <div>
-        <FormLabel>Car mileage / km</FormLabel>
-        <MileageInput type="text" placeholder="From" value={fromMileage}
-          onChange={handleFromMileageChange} />
-        <MileageInput type="text" placeholder="To" value={toMileage}
-          onChange={handleToMileageChange} />
-      </div>
-      <SubmitButton type="submit">Search</SubmitButton>
-    </FilterForm>
+    <StyledForm onSubmit={handleSubmit(handleSearch)}>
+      <Controller
+        name="brand"
+        control={control}
+        render={({ field }) => (
+          <Label>
+            <InputHeading>Car brand</InputHeading>
+            <Select
+              {...field}
+              placeholder="Enter the text"
+              unstyled
+              styles={selectStyles}
+              options={brandsList}
+              defaultValue={searchState.brand}
+              onChange={selectedOption => {
+                field.onChange(selectedOption);
+                handleSelectChange(field.name);
+              }}
+            />
+          </Label>
+        )}
+      />
+
+      <Controller
+        name="price"
+        control={control}
+        render={({ field }) => (
+          <Label>
+            <InputHeading>Price/ 1 hour</InputHeading>
+            <Select
+              {...field}
+              placeholder="To $"
+              unstyled
+              styles={selectStyles}
+              options={priceList}
+              defaultValue={searchState.price}
+              onChange={selectedOption => {
+                field.onChange(selectedOption);
+                handleSelectChange(field.name);
+              }}
+            />
+          </Label>
+        )}
+      />
+
+      <Fieldset>
+        <Legend>Сar mileage / km</Legend>
+        <InputWrapper>
+          <InputLabel>
+            <LabelText>From</LabelText>
+            <NumberInput
+              type="number"
+              name="mileageFrom"
+              autocomplete="off"
+              {...register('mileageFrom')}
+              value={searchState.mileageFrom}
+              onChange={handleInputChange}
+            />
+          </InputLabel>
+
+          <InputLabel>
+            <LabelText>To</LabelText>
+            <NumberInput
+              type="number"
+              name="mileageTo"
+              autocomplete="off"
+              {...register('mileageTo')}
+              value={searchState.mileageTo}
+              onChange={handleInputChange}
+            />
+          </InputLabel>
+        </InputWrapper>
+      </Fieldset>
+
+      <ButtonsWrapper>
+        <ButtonFilter
+          type="submit"
+          tag="button"
+          btnWidth="auto"
+          btnPadding="14px 44px"
+        >
+          Search
+        </ButtonFilter>
+        <ButtonFilter type="reset" onClick={handleFormReset}>
+          Reset
+        </ButtonFilter>
+      </ButtonsWrapper>
+    </StyledForm>
   );
 };
 
-export default FilterSection;
+FilterSection.propTypes = {
+  handleSearch: PropTypes.func.isRequired,
+};

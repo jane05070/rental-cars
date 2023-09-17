@@ -1,10 +1,33 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { getCatalog } from '../service/car-service';
 
+const pendingReducer = state => {
+    state.isLoading = true;
+};
+const rejectedReducer = (state, action) => {
+    state.isLoading = false;
+    state.error = action.payload;
+};
+
+const fetchAdvertsFulfilledReducer = (state, action) => {
+    state.isLoading = false;
+    state.error = null;
+    action.payload.forEach(payloadItem => {
+        const found = state.items.some(
+            stateItem => stateItem.id === payloadItem.id
+        );
+
+        if (!found) {
+            state.items.push(payloadItem);
+        }
+    });
+};
 
 const carsSlice = createSlice({
     name: 'cars',
     initialState: {
         items: [],
+        favorites: [],
         isLoading: false,
         error: null,
         // Add filtering-related state
@@ -15,7 +38,16 @@ const carsSlice = createSlice({
             toMileage: '',
         },
     }, reducers: {
-        
+        addFavorite: (state, action) => {
+            state.favorites.push(action.payload);
+        },
+        removeFavorite: (state, action) => {
+            state.favorites = state.favorites.filter(
+                item => item.id !== action.payload.id
+            );
+        },
+
+        // Add reducers for updating filter values
         setSelectedBrand: (state, action) => {
             state.filters.selectedBrand = action.payload;
         },
@@ -30,9 +62,15 @@ const carsSlice = createSlice({
         },
     },
 
-})
+    extraReducers: builder =>
+        builder
+            .addCase(getCatalog.pending, pendingReducer)
+            .addCase(getCatalog.fulfilled, fetchAdvertsFulfilledReducer)
+            .addCase(getCatalog.rejected, rejectedReducer),
+});
 
-export const { setSelectedBrand,
+export const carsReducer = carsSlice.reducer;
+export const { addFavorite, removeFavorite, setSelectedBrand,
     setSelectedPrice,
     setFromMileage,
     setToMileage, } = carsSlice.actions;

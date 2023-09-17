@@ -70,7 +70,7 @@ export const ButtonFollows = styled.button`
   background: #5a7aaf;
   border: none;
   cursor: pointer;
-  box-shadow: 0px 3.43693px 3.43693px 0px rgba(0, 0, 0, 0.25);
+  
   margin-top: 28px;
   transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
 
@@ -101,23 +101,23 @@ export const LearnMoreBtn = styled.button`
 `;
 
 export const BtnFilter = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  background-color: transparent;
+  margin-top: auto;
+  width: 100%;
+  border-radius: 12px;
+  padding: 12px 20px;
   border: none;
-  border-radius: 10px;
-  padding: 5px;
-  font-weight: 400;
-  font-size: 18px;
-  line-height: 1.2;
-  color: #99bfc8;
-  text-shadow: 2px 2px 5px #000000;
+  background-color: #3470ff;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 1.5;
   cursor: pointer;
-  transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
 
-  &:hover {
-    color: #fff;
+  transition: background-color 250ms ease-in;
+
+  &:hover,
+  &:focus {
+    background-color: #0b44cd;
   }
 `;
 
