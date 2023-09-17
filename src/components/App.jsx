@@ -8,6 +8,7 @@ import {
 import Layout from './Layout/Layout';
 import Loader from './Loader/Loader';
 
+
 const Home = lazy(() => import('pages/Home'));
 const Catalogue = lazy(() => import('pages/Catalogue'));
 const Favorites = lazy(() => import('pages/Favorites'));

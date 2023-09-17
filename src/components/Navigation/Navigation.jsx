@@ -7,12 +7,12 @@ import {
   NavBlock,
   
 } from './Navigation.styled';
-import { useLocation } from 'react-router-dom';
+
 
 
 
 const Navigation = () => {
-  const location = useLocation();
+
  
   return (
     

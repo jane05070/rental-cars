@@ -2,12 +2,7 @@ import axios from 'axios';
 
 axios.defaults.baseURL = "https://65033317a0f2c1f3faeba03a.mockapi.io";
 
-// export const getCatalog = async () => {
-//     const response = await axios.get(
-//         "https://65033317a0f2c1f3faeba03a.mockapi.io"
-//     );
-//     return response.data;
-// };
+
 
 export const getCatalog = async page => {
   try {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import HeroSection from '../components/Hero/Hero';
 import Container from "../components/Container/Container"
 
@@ -10,13 +10,8 @@ import {
 
 
 
-const Home = ({ data }) => {
-  const [isAnimated, setIsAnimated] = useState(false);
-
-  useEffect(() => {
-    setIsAnimated(true);
-  }, []);
-
+const Home = () => {
+  
   return (
     <>
       

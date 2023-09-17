@@ -15,7 +15,9 @@ import {
   Thumb,
 } from "./ModalInfo.styled";
 
-const ModalInfo = ({ data }) => {
+
+
+const CarDetails = ({ data }) => {
   const {
     id,
     img,
@@ -45,7 +47,10 @@ const ModalInfo = ({ data }) => {
   return (
     <DetailsWrapper>
       <Thumb>
-        <CarImg src={img} alt={`${make} ${model} `} />
+        
+          <CarImg src={img} alt={`${make} ${model} `} />
+        
+        
       </Thumb>
       <Make>
         {make} <Model>{model}</Model>, {year}
@@ -91,9 +96,9 @@ const ModalInfo = ({ data }) => {
           Price: <AccentSpan>{rentalPrice}</AccentSpan>
         </ConditionsItem>
       </ConditionsList>
-      <ModalButton href="tel:+380730000000">Rental car</ModalButton>
+      <ModalButton href="tel:+380730000000">Rent a car</ModalButton>
     </DetailsWrapper>
   );
 };
 
-export default ModalInfo;
+export default CarDetails;

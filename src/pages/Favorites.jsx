@@ -1,17 +1,22 @@
-import { FilterSection } from 'components/FilterSection/FilterSection';
-import React from 'react';
-import { useSelector } from 'react-redux';
-import Container from 'components/Container/Container';
+import CarList from "../components/ListCards/ListCards";
+import { GallerySection } from "./Catalogue.styled";
 
-const Favorites = ({ data }) => {
-    const favorite = useSelector(state => state.favorite);
-    const favoriteCars = data.filter(car => favorite.includes(car.id));
+import EmptyFavorites from "../components/EmptyFavorites/EmptyFavorites";
+import { useSelector } from "react-redux";
+import { selectFavorites } from "../redux/favoriteSlice/selectors";
+
+const Favorites = () => {
+    const favorites = useSelector(selectFavorites);
+
     return (
         <>
-            <Container>
-                <FilterSection data={favoriteCars} />
-            </Container>
-
+            {favorites.length === 0 ? (
+                <EmptyFavorites />
+            ) : (
+                <GallerySection>
+                        <CarList renderFavorites />
+                </GallerySection>
+            )}
         </>
     );
 };
