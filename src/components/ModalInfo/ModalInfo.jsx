@@ -37,7 +37,7 @@ const CarDetails = ({ data }) => {
   } = data;
 
   const addressSplit = address.split(",");
-  const [_, city, country] = addressSplit.map((part) => part.trim());
+  const [ city, country] = addressSplit.map((part) => part.trim());
   const additionals = [...accessories, ...functionalities];
   const rentalSplit = rentalConditions.split("\n");
   const [text, age] = rentalSplit[0].split(":");

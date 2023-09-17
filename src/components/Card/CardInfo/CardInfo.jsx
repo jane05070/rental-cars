@@ -23,7 +23,7 @@ const CardInfo = ({ data }) => {
 
     const addressSplit = address.split(",");
 
-    const [_, city, country] = addressSplit.map((part) => part.trim());
+    const [ city, country] = addressSplit.map((part) => part.trim());
 
     const owners = [city, country, rentalCompany];
     const specifications = [type, make, id, engineSize];
