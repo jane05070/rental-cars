@@ -12,8 +12,8 @@ const Catalogue = () => {
   return (
     <>
       <Container>
-         <FilterSection />   
-         <CarList />       
+         {/* <FilterSection />    
+         <CarList />        */}
       </Container>
     </>
   );

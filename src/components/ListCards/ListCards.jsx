@@ -23,7 +23,7 @@ const CarList = ({ renderFavorites }) => {
       try {
         const response = await getCatalog(page);
         const newCars = response;
-        console.log(newCars);
+        
         setCars((prevCars) => [...prevCars, ...newCars]);
       } catch (error) {
         setError(error);
