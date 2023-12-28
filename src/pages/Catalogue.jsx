@@ -1,5 +1,5 @@
 import React from 'react';
-import { FilterSection }  from '../components/FilterSection/FilterSection';
+
 
 import Container from '../components/Container/Container';
 
@@ -12,8 +12,8 @@ const Catalogue = () => {
   return (
     <>
       <Container>
-         {/* <FilterSection />    
-         <CarList />        */}
+     
+         <CarList />        
       </Container>
     </>
   );
